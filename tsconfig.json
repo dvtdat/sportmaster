@@ -4,11 +4,16 @@
     "target": "ESNext",
     "moduleResolution": "NodeNext",
     "declaration": true,
+    "baseUrl": "./",
     "outDir": "./dist",
     "esModuleInterop": true,
     "strict": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "typeRoots": ["./node_modules/@types", "./types"],
+    "paths": {
+      "@app/*": ["./app/*"]
+    }
   },
   "include": ["./app"],
   "exclude": ["node_modules"]

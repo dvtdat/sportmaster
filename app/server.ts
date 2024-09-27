@@ -10,9 +10,12 @@ import mikroOrmConfig from './mikro-orm.config';
 import { User, UserType } from './entities';
 import { UserService, UserTypeService } from './services';
 import { UserController, UserTypeController } from './controllers';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export const app = express();
-const port = 3000;
+const port = process.env.PORT ? parseInt(process.env.PORT, 10) : undefined;
 
 export const DI = {} as {
   server: http.Server;

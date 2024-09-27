@@ -2,14 +2,17 @@ import { defineConfig, PostgreSqlDriver, Utils } from '@mikro-orm/postgresql';
 import { SqlHighlighter } from '@mikro-orm/sql-highlighter';
 import { Migrator, TSMigrationGenerator } from '@mikro-orm/migrations';
 import { BaseEntity, User, UserType } from './entities/index';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export default defineConfig({
   driver: PostgreSqlDriver,
-  host: 'db',
-  port: 5432,
-  user: 'postgres',
-  dbName: 'postgres',
-  password: 'postgres',
+  host: process.env.HOST,
+  port: process.env.PORT ? parseInt(process.env.PORT, 10) : undefined,
+  user: process.env.DB_USER,
+  dbName: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
 
   entities: [BaseEntity, User, UserType],
   debug: true,

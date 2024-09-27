@@ -10,8 +10,10 @@ const postgresql_1 = require("@mikro-orm/postgresql");
 const entities_1 = require("./entities");
 const services_1 = require("./services");
 const controllers_1 = require("./controllers");
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 exports.app = (0, express_1.default)();
-const port = 3000;
+const port = process.env.PORT ? parseInt(process.env.PORT, 10) : undefined;
 exports.DI = {};
 exports.init = (async () => {
     exports.DI.orm = await postgresql_1.MikroORM.init();
