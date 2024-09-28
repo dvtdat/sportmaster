@@ -34,7 +34,7 @@ exports.init = (async () => {
         res.status(404).json({ message: 'No route found' });
     });
     exports.DI.server = http_1.default.createServer(exports.app);
-    exports.DI.server.listen(port, () => {
-        console.log(`Server is running on http://localhost:${port}`);
+    exports.DI.server.listen(port, '0.0.0.0', () => {
+        console.log(`Server is running on port ${port}`);
     });
 })();
