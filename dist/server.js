@@ -4,7 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.init = exports.DI = exports.app = void 0;
-const http_1 = __importDefault(require("http"));
 const express_1 = __importDefault(require("express"));
 const postgresql_1 = require("@mikro-orm/postgresql");
 const entities_1 = require("./entities");
@@ -13,7 +12,7 @@ const controllers_1 = require("./controllers");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 exports.app = (0, express_1.default)();
-const port = process.env.PORT ? parseInt(process.env.PORT, 10) : undefined;
+const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 exports.DI = {};
 exports.init = (async () => {
     exports.DI.orm = await postgresql_1.MikroORM.init();
@@ -33,8 +32,8 @@ exports.init = (async () => {
     exports.app.use((req, res) => {
         res.status(404).json({ message: 'No route found' });
     });
-    exports.DI.server = http_1.default.createServer(exports.app);
-    exports.DI.server.listen(port, '0.0.0.0', () => {
-        console.log(`Server is running on port ${port}`);
+    // Start the server and bind to 0.0.0.0
+    exports.DI.server = exports.app.listen(port, '0.0.0.0', () => {
+        console.log(`Server is running on http://0.0.0.0:${port}`);
     });
 })();
