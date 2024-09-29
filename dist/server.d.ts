@@ -1,7 +1,7 @@
 /// <reference types="node" />
 import http from 'http';
 import { EntityManager, EntityRepository, MikroORM } from '@mikro-orm/postgresql';
-import { User, UserType } from './entities';
+import { User, UserType, Venue } from './entities';
 export declare const app: import("express-serve-static-core").Express;
 export declare const DI: {
     server: http.Server;
@@ -9,5 +9,6 @@ export declare const DI: {
     em: EntityManager;
     user: EntityRepository<User>;
     userType: EntityRepository<UserType>;
+    venue: EntityRepository<Venue>;
 };
 export declare const init: Promise<void>;

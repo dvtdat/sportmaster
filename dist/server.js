@@ -19,6 +19,7 @@ exports.init = (async () => {
     exports.DI.em = exports.DI.orm.em;
     exports.DI.user = exports.DI.orm.em.getRepository(entities_1.User);
     exports.DI.userType = exports.DI.orm.em.getRepository(entities_1.UserType);
+    exports.DI.venue = exports.DI.orm.em.getRepository(entities_1.Venue);
     await exports.DI.orm.getMigrator().up();
     const emFork = exports.DI.orm.em.fork();
     exports.app.use(express_1.default.json());
@@ -26,9 +27,11 @@ exports.init = (async () => {
     // Services
     const userService = new services_1.UserService(exports.DI.orm, emFork, exports.DI.user);
     const userTypeService = new services_1.UserTypeService(exports.DI.orm, emFork, exports.DI.userType);
+    const venueService = new services_1.VenueService(exports.DI.orm, emFork, exports.DI.venue);
     // Controllers
     exports.app.use('/users', new controllers_1.UserController(userService, userTypeService).router);
     exports.app.use('/user_types', new controllers_1.UserTypeController(userService, userTypeService).router);
+    exports.app.use('/venues', new controllers_1.VenueController(venueService).router);
     exports.app.use((req, res) => {
         res.status(404).json({ message: 'No route found' });
     });

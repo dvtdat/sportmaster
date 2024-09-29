@@ -1,7 +1,7 @@
 import { defineConfig, PostgreSqlDriver, Utils } from '@mikro-orm/postgresql';
 import { SqlHighlighter } from '@mikro-orm/sql-highlighter';
 import { Migrator, TSMigrationGenerator } from '@mikro-orm/migrations';
-import { BaseEntity, User, UserType } from './entities/index';
+import { BaseEntity, User, UserType, Venue } from './entities/index';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -14,7 +14,7 @@ export default defineConfig({
   dbName: process.env.DB_NAME,
   password: process.env.DB_PASSWORD,
 
-  entities: [BaseEntity, User, UserType],
+  entities: [BaseEntity, User, UserType, Venue],
   debug: true,
   highlighter: new SqlHighlighter(),
   extensions: [Migrator],

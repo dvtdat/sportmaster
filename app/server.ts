@@ -7,9 +7,13 @@ import {
   RequestContext,
 } from '@mikro-orm/postgresql';
 import mikroOrmConfig from './mikro-orm.config';
-import { User, UserType } from './entities';
-import { UserService, UserTypeService } from './services';
-import { UserController, UserTypeController } from './controllers';
+import { User, UserType, Venue } from './entities';
+import { UserService, UserTypeService, VenueService } from './services';
+import {
+  UserController,
+  UserTypeController,
+  VenueController,
+} from './controllers';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -23,6 +27,7 @@ export const DI = {} as {
   em: EntityManager;
   user: EntityRepository<User>;
   userType: EntityRepository<UserType>;
+  venue: EntityRepository<Venue>;
 };
 
 export const init = (async () => {
@@ -30,6 +35,7 @@ export const init = (async () => {
   DI.em = DI.orm.em;
   DI.user = DI.orm.em.getRepository(User);
   DI.userType = DI.orm.em.getRepository(UserType);
+  DI.venue = DI.orm.em.getRepository(Venue);
 
   await DI.orm.getMigrator().up();
 
@@ -40,6 +46,7 @@ export const init = (async () => {
   // Services
   const userService = new UserService(DI.orm, emFork, DI.user);
   const userTypeService = new UserTypeService(DI.orm, emFork, DI.userType);
+  const venueService = new VenueService(DI.orm, emFork, DI.venue);
 
   // Controllers
   app.use('/users', new UserController(userService, userTypeService).router);
@@ -47,6 +54,7 @@ export const init = (async () => {
     '/user_types',
     new UserTypeController(userService, userTypeService).router
   );
+  app.use('/venues', new VenueController(venueService).router);
 
   app.use((req, res) => {
     res.status(404).json({ message: 'No route found' });
