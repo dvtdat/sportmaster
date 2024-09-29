@@ -566,9 +566,9 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@mikro-orm/cli@^6.0.0":
+"@mikro-orm/cli@^6.3.11":
   version "6.3.11"
-  resolved "https://registry.npmjs.org/@mikro-orm/cli/-/cli-6.3.11.tgz"
+  resolved "https://registry.yarnpkg.com/@mikro-orm/cli/-/cli-6.3.11.tgz#58f13139bd7dd0c4f8b5d2e590d3b9cb6606f7e7"
   integrity sha512-mrFcjOfWWzlEbxYf+W85Ek8Ye+4wswuevqgm7ZkR86bN5qnvI2ijHH+PBiRAFqXDAv1MdpaynH1I0FBSPCt7Vw==
   dependencies:
     "@jercle/yargonaut" "1.1.5"
@@ -580,7 +580,7 @@
 
 "@mikro-orm/core@6.3.11", "@mikro-orm/core@^6.3.11":
   version "6.3.11"
-  resolved "https://registry.npmjs.org/@mikro-orm/core/-/core-6.3.11.tgz"
+  resolved "https://registry.yarnpkg.com/@mikro-orm/core/-/core-6.3.11.tgz#ec96bf1f1296bbe61c23026fe91f8ae500d958a9"
   integrity sha512-pNd74bIDwpWMC0TV4R3hPIddzaydDzvv5pRi7QvX6UdASDEUdWfp185cH6QRi1bbWqlI70GXOBR8Bnzj1bbtpA==
   dependencies:
     dataloader "2.2.2"
@@ -1505,9 +1505,14 @@ dir-glob@^3.0.1:
   dependencies:
     path-type "^4.0.0"
 
-dotenv@16.4.5, dotenv@^16.4.5:
+dotenv@16.4.5:
   version "16.4.5"
   resolved "https://registry.npmjs.org/dotenv/-/dotenv-16.4.5.tgz"
+  integrity sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==
+
+dotenv@^16.4.5:
+  version "16.4.5"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.4.5.tgz#cdd3b3b604cb327e286b4762e13502f717cb099f"
   integrity sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==
 
 duplexer@~0.1.1:
