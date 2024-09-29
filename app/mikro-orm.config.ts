@@ -9,7 +9,7 @@ dotenv.config();
 export default defineConfig({
   driver: PostgreSqlDriver,
   host: process.env.HOST,
-  port: process.env.DB_PORT ? parseInt(process.env.DB_PORT, 10) : undefined,
+  port: process.env.DB_PORT ? parseInt(process.env.DB_PORT, 10) : 5432,
   user: process.env.DB_USER,
   dbName: process.env.DB_NAME,
   password: process.env.DB_PASSWORD,

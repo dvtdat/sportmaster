@@ -12,7 +12,7 @@ const controllers_1 = require("./controllers");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 exports.app = (0, express_1.default)();
-const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3001;
 exports.DI = {};
 exports.init = (async () => {
     exports.DI.orm = await postgresql_1.MikroORM.init();
@@ -32,8 +32,7 @@ exports.init = (async () => {
     exports.app.use((req, res) => {
         res.status(404).json({ message: 'No route found' });
     });
-    // Start the server and bind to 0.0.0.0
-    exports.DI.server = exports.app.listen(port, '0.0.0.0', () => {
-        console.log(`Server is running on http://0.0.0.0:${port}`);
+    exports.DI.server = exports.app.listen(port, () => {
+        console.log(`Server is running on port ${port}`);
     });
 })();

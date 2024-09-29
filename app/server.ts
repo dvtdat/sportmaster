@@ -15,7 +15,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export const app = express();
-const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3001;
 
 export const DI = {} as {
   server: http.Server;
@@ -52,8 +52,7 @@ export const init = (async () => {
     res.status(404).json({ message: 'No route found' });
   });
 
-  // Start the server and bind to 0.0.0.0
-  DI.server = app.listen(port, '0.0.0.0', () => {
-    console.log(`Server is running on http://0.0.0.0:${port}`);
+  DI.server = app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
   });
 })();
