@@ -1,7 +1,14 @@
 import { defineConfig, PostgreSqlDriver, Utils } from '@mikro-orm/postgresql';
 import { SqlHighlighter } from '@mikro-orm/sql-highlighter';
 import { Migrator, TSMigrationGenerator } from '@mikro-orm/migrations';
-import { BaseEntity, User, UserType, Venue } from './entities/index';
+import {
+  BaseEntity,
+  User,
+  UserType,
+  Venue,
+  Event,
+  Transaction,
+} from './entities/index';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -14,12 +21,12 @@ export default defineConfig({
   dbName: process.env.DB_NAME,
   password: process.env.DB_PASSWORD,
 
-  entities: [BaseEntity, User, UserType, Venue],
+  entities: [BaseEntity, User, UserType, Venue, Event, Transaction],
   debug: true,
   highlighter: new SqlHighlighter(),
   extensions: [Migrator],
   migrations: {
-    path: Utils.detectTsNode() ? 'api/migrations' : 'dist/migrations',
+    path: Utils.detectTsNode() ? 'app/migrations' : 'dist/migrations',
     tableName: 'mikro_orm_migrations', // name of database table with log of executed transactions
     glob: '!(*.d).{js,ts}', // how to match migration files (all .js and .ts files, but not .d.ts)
     transactional: true, // wrap each migration in a transaction

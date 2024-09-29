@@ -7,12 +7,20 @@ import {
   RequestContext,
 } from '@mikro-orm/postgresql';
 import mikroOrmConfig from './mikro-orm.config';
-import { User, UserType, Venue } from './entities';
-import { UserService, UserTypeService, VenueService } from './services';
+import { User, UserType, Venue, Event, Transaction } from './entities';
+import {
+  UserService,
+  UserTypeService,
+  VenueService,
+  EventService,
+  TransactionService,
+} from './services';
 import {
   UserController,
   UserTypeController,
   VenueController,
+  EventController,
+  TransactionController,
 } from './controllers';
 import dotenv from 'dotenv';
 
@@ -28,6 +36,8 @@ export const DI = {} as {
   user: EntityRepository<User>;
   userType: EntityRepository<UserType>;
   venue: EntityRepository<Venue>;
+  event: EntityRepository<Event>;
+  transaction: EntityRepository<Transaction>;
 };
 
 export const init = (async () => {
@@ -36,6 +46,8 @@ export const init = (async () => {
   DI.user = DI.orm.em.getRepository(User);
   DI.userType = DI.orm.em.getRepository(UserType);
   DI.venue = DI.orm.em.getRepository(Venue);
+  DI.event = DI.orm.em.getRepository(Event);
+  DI.transaction = DI.orm.em.getRepository(Transaction);
 
   await DI.orm.getMigrator().up();
 
@@ -47,6 +59,12 @@ export const init = (async () => {
   const userService = new UserService(DI.orm, emFork, DI.user);
   const userTypeService = new UserTypeService(DI.orm, emFork, DI.userType);
   const venueService = new VenueService(DI.orm, emFork, DI.venue);
+  const eventService = new EventService(DI.orm, emFork, DI.event);
+  const transactionService = new TransactionService(
+    DI.orm,
+    emFork,
+    DI.transaction
+  );
 
   // Controllers
   app.use('/users', new UserController(userService, userTypeService).router);
@@ -55,6 +73,15 @@ export const init = (async () => {
     new UserTypeController(userService, userTypeService).router
   );
   app.use('/venues', new VenueController(venueService).router);
+  app.use(
+    '/events',
+    new EventController(eventService, userService, venueService).router
+  );
+  app.use(
+    '/transactions',
+    new TransactionController(transactionService, eventService, userService)
+      .router
+  );
 
   app.use((req, res) => {
     res.status(404).json({ message: 'No route found' });
