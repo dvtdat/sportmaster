@@ -44,45 +44,8 @@ const swaggerOptions: swaggerJsdoc.Options = {
         url: 'http://localhost:3001',
       },
     ],
-    // components: {
-    //   schemas: {
-    //     User: {
-    //       type: 'object',
-    //       properties: {
-    //         id: { type: 'integer' },
-    //         name: { type: 'string' },
-    //         userType: { $ref: '#/components/schemas/UserType' },
-    //         createdAt: { type: 'string', format: 'date-time' },
-    //         updatedAt: { type: 'string', format: 'date-time' },
-    //       },
-    //     },
-    //     UserType: {
-    //       type: 'object',
-    //       properties: {
-    //         id: { type: 'integer' },
-    //         name: { type: 'string' },
-    //         createdAt: { type: 'string', format: 'date-time' },
-    //         updatedAt: { type: 'string', format: 'date-time' },
-    //       },
-    //     },
-    //     CreateUserDto: {
-    //       type: 'object',
-    //       properties: {
-    //         name: { type: 'string' },
-    //         userTypeId: { type: 'integer' },
-    //       },
-    //     },
-    //     EditUserDto: {
-    //       type: 'object',
-    //       properties: {
-    //         name: { type: 'string' },
-    //         userTypeId: { type: 'integer' },
-    //       },
-    //     },
-    //   },
-    // },
   },
-  apis: ['app/controllers/*.ts', 'app/entities/*.ts'],
+  apis: ['app/controllers/*.ts', 'app/entities/*.ts', 'app/services/dto/*.ts'],
 };
 
 const swaggerSpec = swaggerJsdoc(swaggerOptions);

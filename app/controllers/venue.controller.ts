@@ -29,9 +29,106 @@ export class VenueController {
      *         description: Bad request
      */
     this.router.get('/', this.getAll.bind(this));
+
+    /**
+     * @swagger
+     * /venues/{id}:
+     *   get:
+     *     summary: Retrieve a single venue by ID
+     *     tags: [Venues]
+     *     parameters:
+     *       - in: path
+     *         name: id
+     *         schema:
+     *           type: integer
+     *         required: true
+     *         description: The venue ID
+     *     responses:
+     *       200:
+     *         description: A single venue
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/Venue'
+     *       400:
+     *         description: Bad request
+     */
     this.router.get('/:id', this.getById.bind(this));
+
+    /**
+     * @swagger
+     * /venues:
+     *   post:
+     *     summary: Create a new venue
+     *     tags: [Venues]
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: '#/components/schemas/CreateVenueDto'
+     *     responses:
+     *       200:
+     *         description: The created venue
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/Venue'
+     *       400:
+     *         description: Bad request
+     */
     this.router.post('/', this.create.bind(this));
+
+    /**
+     * @swagger
+     * /venues/{id}:
+     *   patch:
+     *     summary: Update an existing venue
+     *     tags: [Venues]
+     *     parameters:
+     *       - in: path
+     *         name: id
+     *         schema:
+     *           type: integer
+     *         required: true
+     *         description: The venue ID
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: '#/components/schemas/EditVenueDto'
+     *     responses:
+     *       200:
+     *         description: The updated venue
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/Venue'
+     *       400:
+     *         description: Bad request
+     */
     this.router.patch('/:id', this.update.bind(this));
+
+    /**
+     * @swagger
+     * /venues/{id}:
+     *   delete:
+     *     summary: Delete a venue by ID
+     *     tags: [Venues]
+     *     parameters:
+     *       - in: path
+     *         name: id
+     *         schema:
+     *           type: integer
+     *         required: true
+     *         description: The venue ID
+     *     responses:
+     *       200:
+     *         description: Venue deleted successfully
+     *       400:
+     *         description: Bad request
+     */
     this.router.delete('/:id', this.delete.bind(this));
   }
 
