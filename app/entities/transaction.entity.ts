@@ -1,6 +1,37 @@
 import { Entity, ManyToOne, Property } from '@mikro-orm/core';
 import { BaseEntity, Event, User } from './index';
 
+/**
+ * Represents a transaction entity.
+ *
+ * @swagger
+ * components:
+ *   schemas:
+ *     Transaction:
+ *       type: object
+ *       properties:
+ *         event:
+ *           $ref: '#/components/schemas/Event'
+ *         description:
+ *           type: string
+ *           maxLength: 1000
+ *           nullable: true
+ *         completed:
+ *           type: boolean
+ *         amount:
+ *           type: number
+ *           default: 0
+ *         toUser:
+ *           $ref: '#/components/schemas/User'
+ *         fromUser:
+ *           $ref: '#/components/schemas/User'
+ *       required:
+ *         - event
+ *         - completed
+ *         - amount
+ *         - toUser
+ *         - fromUser
+ */
 @Entity()
 export class Transaction extends BaseEntity {
   @ManyToOne({ entity: () => Event })

@@ -23,11 +23,76 @@ import {
   TransactionController,
 } from './controllers';
 import dotenv from 'dotenv';
+import swaggerJsdoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
 
 dotenv.config();
 
 export const app = express();
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3001;
+
+const swaggerOptions: swaggerJsdoc.Options = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'My API',
+      version: '1.0.0',
+      description: 'API documentation for my Express app',
+    },
+    servers: [
+      {
+        url: 'http://localhost:3001',
+      },
+    ],
+    // components: {
+    //   schemas: {
+    //     User: {
+    //       type: 'object',
+    //       properties: {
+    //         id: { type: 'integer' },
+    //         name: { type: 'string' },
+    //         userType: { $ref: '#/components/schemas/UserType' },
+    //         createdAt: { type: 'string', format: 'date-time' },
+    //         updatedAt: { type: 'string', format: 'date-time' },
+    //       },
+    //     },
+    //     UserType: {
+    //       type: 'object',
+    //       properties: {
+    //         id: { type: 'integer' },
+    //         name: { type: 'string' },
+    //         createdAt: { type: 'string', format: 'date-time' },
+    //         updatedAt: { type: 'string', format: 'date-time' },
+    //       },
+    //     },
+    //     CreateUserDto: {
+    //       type: 'object',
+    //       properties: {
+    //         name: { type: 'string' },
+    //         userTypeId: { type: 'integer' },
+    //       },
+    //     },
+    //     EditUserDto: {
+    //       type: 'object',
+    //       properties: {
+    //         name: { type: 'string' },
+    //         userTypeId: { type: 'integer' },
+    //       },
+    //     },
+    //   },
+    // },
+  },
+  apis: ['app/controllers/*.ts', 'app/entities/*.ts'],
+};
+
+const swaggerSpec = swaggerJsdoc(swaggerOptions);
+app.use(
+  '/api/docs',
+  swaggerUi.serve as unknown as express.RequestHandler,
+  swaggerUi.setup(swaggerSpec, {
+    explorer: true,
+  }) as unknown as express.RequestHandler
+);
 
 export const DI = {} as {
   server: http.Server;

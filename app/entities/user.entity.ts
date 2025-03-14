@@ -9,6 +9,39 @@ import {
 } from '@mikro-orm/core';
 import { BaseEntity, UserType, Transaction, Event } from './index';
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: The name of the user.
+ *         userType:
+ *           $ref: '#/components/schemas/UserType'
+ *           description: The type of the user.
+ *         events:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/Event'
+ *           description: The events the user is attending.
+ *         sentTransactions:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/Transaction'
+ *           description: The transactions sent by the user.
+ *         receivedTransactions:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/Transaction'
+ *           description: The transactions received by the user.
+ */
+
+/**
+ * Represents a user entity.
+ */
 @Entity()
 export class User extends BaseEntity {
   @Property({ type: t.text })

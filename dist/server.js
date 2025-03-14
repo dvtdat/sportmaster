@@ -10,9 +10,68 @@ const entities_1 = require("./entities");
 const services_1 = require("./services");
 const controllers_1 = require("./controllers");
 const dotenv_1 = __importDefault(require("dotenv"));
+const swagger_jsdoc_1 = __importDefault(require("swagger-jsdoc"));
+const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 dotenv_1.default.config();
 exports.app = (0, express_1.default)();
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3001;
+const swaggerOptions = {
+    definition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'My API',
+            version: '1.0.0',
+            description: 'API documentation for my Express app',
+        },
+        servers: [
+            {
+                url: 'http://localhost:3001',
+            },
+        ],
+        // components: {
+        //   schemas: {
+        //     User: {
+        //       type: 'object',
+        //       properties: {
+        //         id: { type: 'integer' },
+        //         name: { type: 'string' },
+        //         userType: { $ref: '#/components/schemas/UserType' },
+        //         createdAt: { type: 'string', format: 'date-time' },
+        //         updatedAt: { type: 'string', format: 'date-time' },
+        //       },
+        //     },
+        //     UserType: {
+        //       type: 'object',
+        //       properties: {
+        //         id: { type: 'integer' },
+        //         name: { type: 'string' },
+        //         createdAt: { type: 'string', format: 'date-time' },
+        //         updatedAt: { type: 'string', format: 'date-time' },
+        //       },
+        //     },
+        //     CreateUserDto: {
+        //       type: 'object',
+        //       properties: {
+        //         name: { type: 'string' },
+        //         userTypeId: { type: 'integer' },
+        //       },
+        //     },
+        //     EditUserDto: {
+        //       type: 'object',
+        //       properties: {
+        //         name: { type: 'string' },
+        //         userTypeId: { type: 'integer' },
+        //       },
+        //     },
+        //   },
+        // },
+    },
+    apis: ['app/controllers/*.ts', 'app/entities/*.ts'],
+};
+const swaggerSpec = (0, swagger_jsdoc_1.default)(swaggerOptions);
+exports.app.use('/api/docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swaggerSpec, {
+    explorer: true,
+}));
 exports.DI = {};
 exports.init = (async () => {
     exports.DI.orm = await postgresql_1.MikroORM.init();

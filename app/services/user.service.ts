@@ -24,12 +24,24 @@ export class UserService {
   public async getUsers(filters: Partial<User>): Promise<User[]> {
     return this.userRepository.find(filters, {
       orderBy: { id: 'asc' },
-      populate: ['userType'],
+      populate: [
+        'userType',
+        'events',
+        'sentTransactions',
+        'receivedTransactions',
+      ],
     });
   }
 
   public async getUserById(id: number): Promise<User> {
-    return this.userRepository.findOneOrFail(id);
+    return this.userRepository.findOneOrFail(id, {
+      populate: [
+        'userType',
+        'events',
+        'sentTransactions',
+        'receivedTransactions',
+      ],
+    });
   }
 
   public async getUserByUserTypeId(userTypeId: number): Promise<User[]> {
