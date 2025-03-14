@@ -8,18 +8,20 @@ import { BaseEntity } from './index';
  * components:
  *   schemas:
  *     Venue:
- *       type: object
- *       properties:
- *         name:
- *           type: string
- *           description: The name of the venue.
- *         address:
- *           type: string
- *           description: The address of the venue.
- *         phone:
- *           type: string
- *           nullable: true
- *           description: The phone number of the venue.
+ *       allOf:
+ *         - $ref: '#/components/schemas/BaseEntity'
+ *         - type: object
+ *           properties:
+ *             name:
+ *               type: string
+ *               description: The name of the venue.
+ *             address:
+ *               type: string
+ *               description: The address of the venue.
+ *             phone:
+ *               type: string
+ *               nullable: true
+ *               description: The phone number of the venue.
  */
 @Entity()
 export class Venue extends BaseEntity {

@@ -9,6 +9,8 @@ import { BaseEntity, Event, User } from './index';
  *   schemas:
  *     Transaction:
  *       type: object
+ *       allOf:
+ *         - $ref: '#/components/schemas/BaseEntity'
  *       properties:
  *         event:
  *           $ref: '#/components/schemas/Event'

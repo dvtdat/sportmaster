@@ -8,6 +8,8 @@ export const predefinedUserTypes = ['Organizer', 'External', 'Vendor'];
  * components:
  *   schemas:
  *     UserType:
+ *       allOf:
+ *         - $ref: '#/components/schemas/BaseEntity'
  *       type: object
  *       properties:
  *         name:
@@ -20,18 +22,6 @@ export const predefinedUserTypes = ['Organizer', 'External', 'Vendor'];
  *           description: The collection of users associated with this user type.
  */
 
-/**
- * Represents a type of user in the system.
- *
- * @class UserType
- * @extends BaseEntity
- *
- * @property {string} name - The name of the user type.
- * @property {Collection<User>} users - The collection of users associated with this user type.
- *
- * @constructor
- * @param {string} name - The name of the user type.
- */
 @Entity()
 export class UserType extends BaseEntity {
   @Property({ type: t.text })

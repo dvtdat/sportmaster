@@ -10,6 +10,24 @@ export class VenueController {
   public readonly router = Router();
 
   constructor(@inject('VenueService') private venueService: VenueService) {
+    /**
+     * @swagger
+     * /venues:
+     *   get:
+     *     summary: Retrieve a list of venues
+     *     tags: [Venues]
+     *     responses:
+     *       200:
+     *         description: A list of venues
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: array
+     *               items:
+     *                 $ref: '#/components/schemas/Venue'
+     *       400:
+     *         description: Bad request
+     */
     this.router.get('/', this.getAll.bind(this));
     this.router.get('/:id', this.getById.bind(this));
     this.router.post('/', this.create.bind(this));
