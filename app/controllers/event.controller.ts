@@ -15,11 +15,204 @@ export class EventController {
     @inject('UserService') private userService: UserService,
     @inject('VenueService') private venueService: VenueService
   ) {
+    /**
+     * @swagger
+     * /events:
+     *   get:
+     *     summary: Retrieve a list of events
+     *     tags: [Events]
+     *     parameters:
+     *       - in: query
+     *         name: venueId
+     *         schema:
+     *           type: integer
+     *         description: Filter events by venue ID
+     *     responses:
+     *       200:
+     *         description: A list of events
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: array
+     *               items:
+     *                 $ref: '#/components/schemas/Event'
+     */
     this.router.get('/', this.getAll.bind(this));
+
+    /**
+     * @swagger
+     * /events/{id}:
+     *   get:
+     *     summary: Retrieve an event by ID
+     *     tags: [Events]
+     *     parameters:
+     *       - in: path
+     *         name: id
+     *         required: true
+     *         schema:
+     *           type: integer
+     *     responses:
+     *       200:
+     *         description: An event
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/Event'
+     */
     this.router.get('/:id', this.getById.bind(this));
+
+    /**
+     * @swagger
+     * /events:
+     *   post:
+     *     summary: Create a new event
+     *     tags: [Events]
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             properties:
+     *               name:
+     *                 type: string
+     *               description:
+     *                 type: string
+     *               startedAt:
+     *                 type: string
+     *                 format: date-time
+     *               endedAt:
+     *                 type: string
+     *                 format: date-time
+     *               venueId:
+     *                 type: integer
+     *                 example: 1
+     *     responses:
+     *       200:
+     *         description: The created event
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/Event'
+     *       400:
+     *         description: Bad request
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 message:
+     *                   type: string
+     */
     this.router.post('/', this.create.bind(this));
+
+    /**
+     * @swagger
+     * /events/{id}:
+     *   patch:
+     *     summary: Update an event by ID
+     *     tags: [Events]
+     *     parameters:
+     *       - in: path
+     *         name: id
+     *         required: true
+     *         schema:
+     *           type: integer
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             properties:
+     *               name:
+     *                 type: string
+     *               description:
+     *                 type: string
+     *               startedAt:
+     *                 type: string
+     *                 format: date-time
+     *               endedAt:
+     *                 type: string
+     *                 format: date-time
+     *               venueId:
+     *                 type: integer
+     *                 example: 1
+     *     responses:
+     *       200:
+     *         description: The updated event
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/Event'
+     */
     this.router.patch('/:id', this.update.bind(this));
+
+    /**
+     * @swagger
+     * /events/{id}:
+     *   delete:
+     *     summary: Delete an event by ID
+     *     tags: [Events]
+     *     parameters:
+     *       - in: path
+     *         name: id
+     *         required: true
+     *         schema:
+     *           type: integer
+     *     responses:
+     *       200:
+     *         description: The deleted event
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 message:
+     *                   type: string
+     *       400:
+     *         description: Bad request
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 message:
+     *                   type: string
+     */
     this.router.delete('/:id', this.delete.bind(this));
+
+    /**
+     * @swagger
+     * /events/{id}/attendees:
+     *   post:
+     *     summary: Edit attendees of an event
+     *     tags: [Events]
+     *     parameters:
+     *       - in: path
+     *         name: id
+     *         required: true
+     *         schema:
+     *           type: integer
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             properties:
+     *               userIds:
+     *                 type: array
+     *                 items:
+     *                   type: integer
+     *     responses:
+     *       200:
+     *         description: The updated event with attendees
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/Event'
+     */
     this.router.post('/:id/attendees', this.editAttendees.bind(this));
   }
 
@@ -135,6 +328,8 @@ export class EventController {
 
   async delete(req: Request, res: Response) {
     try {
+      await this.eventService.getEventById(parseInt(req.params.id));
+
       await this.eventService.deleteById(parseInt(req.params.id));
       res.json({ message: 'Event deleted successfully' });
     } catch (error) {

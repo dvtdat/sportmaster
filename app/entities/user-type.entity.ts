@@ -15,11 +15,6 @@ export const predefinedUserTypes = ['Organizer', 'External', 'Vendor'];
  *         name:
  *           type: string
  *           description: The name of the user type.
- *         users:
- *           type: array
- *           items:
- *             $ref: '#/components/schemas/User'
- *           description: The collection of users associated with this user type.
  */
 
 @Entity()

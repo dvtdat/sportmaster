@@ -27,6 +27,17 @@ export class TransactionService {
       createTransactionDto.fromUser
     );
     this.em.persistAndFlush(transaction);
+    await this.em.populate(transaction, [
+      'event.id',
+      'event.createdAt',
+      'event.updatedAt',
+      'event.name',
+      'event.description',
+      'event.startedAt',
+      'event.endedAt',
+      'event.venue',
+    ]);
+
     return transaction;
   }
 
@@ -35,7 +46,7 @@ export class TransactionService {
   ): Promise<Transaction[]> {
     return this.transactionRepository.find(filters, {
       orderBy: { id: 'asc' },
-      populate: ['event', 'toUser', 'fromUser'],
+      populate: ['event', 'event.venue', 'toUser', 'fromUser'],
     });
   }
 

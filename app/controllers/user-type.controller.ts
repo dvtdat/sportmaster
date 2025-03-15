@@ -8,15 +8,131 @@ import { predefinedUserTypes } from '../entities';
 @injectable()
 export class UserTypeController {
   public readonly router = Router();
-
   constructor(
     @inject('UserService') private userService: UserService,
     @inject('UserTypeService') private userTypeService: UserTypeService
   ) {
+    /**
+     * @swagger
+     * /user_types:
+     *   get:
+     *     summary: Retrieve a list of user types
+     *     tags: [UserType]
+     *     responses:
+     *       200:
+     *         description: A list of user types
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: array
+     *               items:
+     *                 $ref: '#/components/schemas/UserType'
+     */
     this.router.get('/', this.getAll.bind(this));
+
+    /**
+     * @swagger
+     * /user_types/{id}:
+     *   get:
+     *     summary: Retrieve a user type by ID
+     *     tags: [UserType]
+     *     parameters:
+     *       - in: path
+     *         name: id
+     *         schema:
+     *           type: string
+     *         required: true
+     *         description: The user type ID
+     *     responses:
+     *       200:
+     *         description: A user type object
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/UserType'
+     *       404:
+     *         description: User type not found
+     */
     this.router.get('/:id', this.getById.bind(this));
+
+    /**
+     * @swagger
+     * /user_types:
+     *   post:
+     *     summary: Create a new user type
+     *     tags: [UserType]
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             properties:
+     *               name:
+     *                 type: string
+     *     responses:
+     *       201:
+     *         description: The created user type
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/UserType'
+     */
     this.router.post('/', this.create.bind(this));
+
+    /**
+     * @swagger
+     * /user_types/{id}:
+     *   patch:
+     *     summary: Update a user type by ID
+     *     tags: [UserType]
+     *     parameters:
+     *       - in: path
+     *         name: id
+     *         schema:
+     *           type: string
+     *         required: true
+     *         description: The user type ID
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             properties:
+     *               name:
+     *                 type: string
+     *     responses:
+     *       200:
+     *         description: The updated user type
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/UserType'
+     *       404:
+     *         description: User type not found
+     */
     this.router.patch('/:id', this.update.bind(this));
+
+    /**
+     * @swagger
+     * /user_types/{id}:
+     *   delete:
+     *     summary: Delete a user type by ID
+     *     tags: [UserType]
+     *     parameters:
+     *       - in: path
+     *         name: id
+     *         schema:
+     *           type: string
+     *         required: true
+     *         description: The user type ID
+     *     responses:
+     *       204:
+     *         description: User type deleted
+     *       404:
+     *         description: User type not found
+     */
     this.router.delete('/:id', this.delete.bind(this));
   }
 

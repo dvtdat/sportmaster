@@ -30,13 +30,13 @@ export class EventService {
   public async getEvents(filters: Partial<Event>): Promise<Event[]> {
     return this.eventRepository.find(filters, {
       orderBy: { id: 'asc' },
-      populate: ['attendees', 'venue'],
+      populate: ['attendees', 'venue', 'transactions'],
     });
   }
 
   public async getEventById(id: number): Promise<Event> {
     return this.eventRepository.findOneOrFail(id, {
-      populate: ['attendees', 'venue'],
+      populate: ['attendees', 'venue', 'transactions'],
     });
   }
 

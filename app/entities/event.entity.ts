@@ -12,6 +12,35 @@ import { Venue, User, BaseEntity, Transaction } from './index';
  * @swagger
  * components:
  *   schemas:
+ *     EventTransaction:
+ *       type: object
+ *       allOf:
+ *         - $ref: '#/components/schemas/BaseEntity'
+ *       properties:
+ *         event:
+ *           type: number
+ *         description:
+ *           type: string
+ *           maxLength: 1000
+ *           nullable: true
+ *         completed:
+ *           type: boolean
+ *         amount:
+ *           type: number
+ *           default: 0
+ *         toUser:
+ *           type: number
+ *           description: The ID of the user receiving the transaction.
+ *         fromUser:
+ *           type: number
+ *           description: The ID of the user sending the transaction.
+ *       required:
+ *         - event
+ *         - completed
+ *         - amount
+ *         - toUser
+ *         - fromUser
+ *
  *     Event:
  *       allOf:
  *         - $ref: '#/components/schemas/BaseEntity'
@@ -37,12 +66,21 @@ import { Venue, User, BaseEntity, Transaction } from './index';
  *         attendees:
  *           type: array
  *           items:
- *             $ref: '#/components/schemas/User'
+ *             allOf:
+ *               - $ref: '#/components/schemas/BaseEntity'
+ *               - type: object
+ *                 properties:
+ *                   name:
+ *                     type: string
+ *                     description: The name of the attendee.
+ *                   userType:
+ *                     type: integer
+ *                     description: The type of the user.
  *           description: The list of users attending the event.
  *         transactions:
  *           type: array
  *           items:
- *             $ref: '#/components/schemas/Transaction'
+ *             $ref: '#/components/schemas/EventTransaction'
  *           description: The list of transactions associated with the event.
  */
 

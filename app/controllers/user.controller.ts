@@ -75,7 +75,12 @@ export class UserController {
      *       content:
      *         application/json:
      *           schema:
-     *             $ref: '#/components/schemas/CreateUserDto'
+     *             type: object
+     *             properties:
+     *               name:
+     *                 type: string
+     *               userTypeId:
+     *                 type: integer
      *     responses:
      *       200:
      *         description: The created user
@@ -106,7 +111,12 @@ export class UserController {
      *       content:
      *         application/json:
      *           schema:
-     *             $ref: '#/components/schemas/EditUserDto'
+     *             type: object
+     *             properties:
+     *               name:
+     *                 type: string
+     *               userTypeId:
+     *                 type: integer
      *     responses:
      *       200:
      *         description: The updated user

@@ -7,13 +7,35 @@ import { BaseEntity, Event, User } from './index';
  * @swagger
  * components:
  *   schemas:
+ *     EventSummary:
+ *       allOf:
+ *         - $ref: '#/components/schemas/BaseEntity'
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: The name of the event.
+ *         description:
+ *           type: string
+ *           description: A brief description of the event.
+ *         startedAt:
+ *           type: string
+ *           format: date-time
+ *           description: The start date and time of the event.
+ *         endedAt:
+ *           type: string
+ *           format: date-time
+ *           description: The end date and time of the event.
+ *         venue:
+ *           $ref: '#/components/schemas/Venue'
+ *           description: The venue where the event is held.
  *     Transaction:
  *       type: object
  *       allOf:
  *         - $ref: '#/components/schemas/BaseEntity'
  *       properties:
  *         event:
- *           $ref: '#/components/schemas/Event'
+ *           $ref: '#/components/schemas/EventSummary'
  *         description:
  *           type: string
  *           maxLength: 1000
@@ -24,9 +46,47 @@ import { BaseEntity, Event, User } from './index';
  *           type: number
  *           default: 0
  *         toUser:
- *           $ref: '#/components/schemas/User'
+ *           type: object
+ *           properties:
+ *             id:
+ *               type: number
+ *             createdAt:
+ *               type: string
+ *               format: date-time
+ *             updatedAt:
+ *               type: string
+ *               format: date-time
+ *             name:
+ *               type: string
+ *             userType:
+ *               type: number
+ *           required:
+ *             - id
+ *             - createdAt
+ *             - updatedAt
+ *             - name
+ *             - userType
  *         fromUser:
- *           $ref: '#/components/schemas/User'
+ *           type: object
+ *           properties:
+ *             id:
+ *               type: number
+ *             createdAt:
+ *               type: string
+ *               format: date-time
+ *             updatedAt:
+ *               type: string
+ *               format: date-time
+ *             name:
+ *               type: string
+ *             userType:
+ *               type: number
+ *           required:
+ *             - id
+ *             - createdAt
+ *             - updatedAt
+ *             - name
+ *             - userType
  *       required:
  *         - event
  *         - completed
