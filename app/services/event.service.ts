@@ -30,13 +30,13 @@ export class EventService {
   public async getEvents(filters: Partial<Event>): Promise<Event[]> {
     return this.eventRepository.find(filters, {
       orderBy: { id: 'asc' },
-      populate: ['attendees', 'venue', 'transactions'],
+      populate: ['attendees', 'venue', 'transactions:ref'],
     });
   }
 
   public async getEventById(id: number): Promise<Event> {
     return this.eventRepository.findOneOrFail(id, {
-      populate: ['attendees:ref', 'venue', 'transactions'],
+      populate: ['attendees', 'venue', 'transactions:ref'],
     });
   }
 
@@ -45,7 +45,7 @@ export class EventService {
     editEventDto: EditEventDto
   ): Promise<Event> {
     const event = await this.eventRepository.findOneOrFail(id, {
-      populate: ['attendees', 'venue'],
+      populate: ['attendees', 'venue', 'transactions:ref'],
     });
 
     event.name = editEventDto.name;
@@ -65,9 +65,11 @@ export class EventService {
     const event = await this.eventRepository.findOneOrFail(eventId, {
       populate: ['attendees', 'venue'],
     });
+    console.log(event.attendees);
     event.attendees.set(attendees);
-
     await this.em.persistAndFlush(event);
+    console.log(event.attendees);
+
     return event;
   }
 

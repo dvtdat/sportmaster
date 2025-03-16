@@ -66,22 +66,13 @@ import { Venue, User, BaseEntity, Transaction } from './index';
  *         attendees:
  *           type: array
  *           items:
- *             allOf:
- *               - $ref: '#/components/schemas/BaseEntity'
- *               - type: object
- *                 properties:
- *                   name:
- *                     type: string
- *                     description: The name of the attendee.
- *                   userType:
- *                     type: integer
- *                     description: The type of the user.
- *           description: The list of users attending the event.
+ *             type: integer
+ *           description: The list of user IDs attending the event.
  *         transactions:
  *           type: array
  *           items:
- *             $ref: '#/components/schemas/EventTransaction'
- *           description: The list of transactions associated with the event.
+ *             type: integer
+ *           description: The list of transaction IDs associated with the event.
  */
 
 @Entity()

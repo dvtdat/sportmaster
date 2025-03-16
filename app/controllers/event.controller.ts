@@ -150,7 +150,7 @@ export class EventController {
 
       const users = await Promise.all(
         userIds.map(async (userId: number) => {
-          const user = await this.userService.getUserById(userId);
+          const user = await this.userService.getUserByIdNoTransaction(userId);
           return user;
         })
       );

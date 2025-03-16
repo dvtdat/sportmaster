@@ -6,6 +6,7 @@ import {
   MikroORM,
 } from '@mikro-orm/postgresql';
 import { CreateUserDto, EditUserDto } from './dto';
+import { populate } from 'dotenv';
 
 @injectable()
 export class UserService {
@@ -18,29 +19,27 @@ export class UserService {
   public async createUser(createUserDto: CreateUserDto) {
     const user = new User(createUserDto.name, createUserDto.userType);
     await this.em.persistAndFlush(user);
-    return user;
+    return await this.userRepository.findOneOrFail(user.id, {
+      populate: ['userType'],
+    });
   }
 
   public async getUsers(filters: Partial<User>): Promise<User[]> {
     return this.userRepository.find(filters, {
       orderBy: { id: 'asc' },
-      populate: [
-        'userType',
-        'events',
-        'sentTransactions',
-        'receivedTransactions',
-      ],
+      populate: ['userType'],
     });
   }
 
   public async getUserById(id: number): Promise<User> {
     return this.userRepository.findOneOrFail(id, {
-      populate: [
-        'userType',
-        'events:ref',
-        'sentTransactions:ref',
-        'receivedTransactions:ref',
-      ],
+      populate: ['userType'],
+    });
+  }
+
+  public async getUserByIdNoTransaction(id: number): Promise<User> {
+    return this.userRepository.findOneOrFail(id, {
+      populate: ['userType'],
     });
   }
 
@@ -56,7 +55,11 @@ export class UserService {
     return user;
   }
 
-  public async deleteById(id: number): Promise<number> {
-    return this.userRepository.nativeDelete({ id });
+  public async deleteById(id: number): Promise<User> {
+    const user = await this.userRepository.findOneOrFail(id, {
+      populate: ['userType'],
+    });
+    await this.userRepository.nativeDelete({ id });
+    return user;
   }
 }

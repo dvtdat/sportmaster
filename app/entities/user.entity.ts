@@ -23,21 +23,6 @@ import { BaseEntity, UserType, Transaction, Event } from './index';
  *             userType:
  *               $ref: '#/components/schemas/UserType'
  *               description: The type of the user.
- *             events:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Event'
- *               description: The events the user is attending.
- *             sentTransactions:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Transaction'
- *               description: The transactions sent by the user.
- *             receivedTransactions:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Transaction'
- *               description: The transactions received by the user.
  */
 
 @Entity()

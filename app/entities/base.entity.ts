@@ -20,11 +20,6 @@ import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
  *           description: Timestamp when the entity was last updated
  */
 
-/**
- * Abstract base class for all entities.
- *
- * @abstract
- */
 @Entity({ abstract: true })
 export abstract class BaseEntity {
   @PrimaryKey()

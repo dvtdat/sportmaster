@@ -144,7 +144,11 @@ export class UserController {
      *         description: The user ID
      *     responses:
      *       200:
-     *         description: User deleted successfully
+     *         description: The deleted user
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/User'
      *       400:
      *         description: Bad request
      */
@@ -225,8 +229,8 @@ export class UserController {
 
   async delete(req: Request, res: Response) {
     try {
-      await this.userService.deleteById(parseInt(req.params.id));
-      res.json({ message: 'User deleted successfully' });
+      const user = await this.userService.deleteById(parseInt(req.params.id));
+      res.json(user);
     } catch (error) {
       res.status(400).json({ message: error });
     }
