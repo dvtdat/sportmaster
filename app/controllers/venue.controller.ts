@@ -125,7 +125,11 @@ export class VenueController {
      *         description: The venue ID
      *     responses:
      *       200:
-     *         description: Venue deleted successfully
+     *         description: The deleted venue
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/Venue'
      *       400:
      *         description: Bad request
      */
@@ -199,8 +203,8 @@ export class VenueController {
 
   async delete(req: Request, res: Response) {
     try {
-      await this.venueService.deleteById(parseInt(req.params.id));
-      res.json({ message: 'Venue deleted successfully' });
+      const venue = await this.venueService.deleteById(parseInt(req.params.id));
+      res.json(venue);
     } catch (error) {
       res.status(400).json({ message: error });
     }

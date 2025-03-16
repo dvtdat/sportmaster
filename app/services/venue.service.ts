@@ -20,9 +20,7 @@ export class VenueService {
 
     venue.name = createVenueDto.name;
     venue.address = createVenueDto.address;
-    if (createVenueDto.phone) {
-      venue.phone = createVenueDto.phone;
-    }
+    venue.phone = createVenueDto.phone ?? null;
 
     await this.em.persistAndFlush(venue);
     return venue;
@@ -52,7 +50,9 @@ export class VenueService {
     return venue;
   }
 
-  public async deleteById(id: number): Promise<number> {
-    return this.venueRepository.nativeDelete({ id });
+  public async deleteById(id: number): Promise<Venue> {
+    const venue = await this.venueRepository.findOneOrFail(id);
+    await this.venueRepository.nativeDelete({ id });
+    return venue;
   }
 }

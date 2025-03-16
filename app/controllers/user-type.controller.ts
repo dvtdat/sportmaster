@@ -71,7 +71,7 @@ export class UserTypeController {
      *               name:
      *                 type: string
      *     responses:
-     *       201:
+     *       200:
      *         description: The created user type
      *         content:
      *           application/json:
@@ -128,8 +128,12 @@ export class UserTypeController {
      *         required: true
      *         description: The user type ID
      *     responses:
-     *       204:
-     *         description: User type deleted
+     *       200:
+     *         description: The deleted user type
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/UserType'
      *       404:
      *         description: User type not found
      */
@@ -161,7 +165,8 @@ export class UserTypeController {
       const userType = await this.userTypeService.createUserType(
         req.body.name as string
       );
-      res.json(userType);
+      const { users, ...userTypeWithoutUsers } = userType;
+      res.json(userTypeWithoutUsers);
     } catch (error) {
       res.status(400).json({ message: error });
     }
@@ -206,7 +211,7 @@ export class UserTypeController {
 
       await this.userTypeService.deleteById(parseInt(req.params.id));
 
-      res.json({ message: 'User type deleted successfully' });
+      res.json(userType);
     } catch (error) {
       res.status(400).json({ message: error });
     }
