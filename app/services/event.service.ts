@@ -36,7 +36,7 @@ export class EventService {
 
   public async getEventById(id: number): Promise<Event> {
     return this.eventRepository.findOneOrFail(id, {
-      populate: ['attendees', 'venue', 'transactions'],
+      populate: ['attendees:ref', 'venue', 'transactions'],
     });
   }
 

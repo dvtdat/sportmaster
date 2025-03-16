@@ -29,6 +29,14 @@ import { BaseEntity, Event, User } from './index';
  *         venue:
  *           $ref: '#/components/schemas/Venue'
  *           description: The venue where the event is held.
+ *         attendees:
+ *           type: array
+ *           items:
+ *             type: integer
+ *         transactions:
+ *           type: array
+ *           items:
+ *             type: integer
  *     Transaction:
  *       type: object
  *       allOf:
@@ -46,47 +54,9 @@ import { BaseEntity, Event, User } from './index';
  *           type: number
  *           default: 0
  *         toUser:
- *           type: object
- *           properties:
- *             id:
- *               type: number
- *             createdAt:
- *               type: string
- *               format: date-time
- *             updatedAt:
- *               type: string
- *               format: date-time
- *             name:
- *               type: string
- *             userType:
- *               type: number
- *           required:
- *             - id
- *             - createdAt
- *             - updatedAt
- *             - name
- *             - userType
+ *           type: integer
  *         fromUser:
- *           type: object
- *           properties:
- *             id:
- *               type: number
- *             createdAt:
- *               type: string
- *               format: date-time
- *             updatedAt:
- *               type: string
- *               format: date-time
- *             name:
- *               type: string
- *             userType:
- *               type: number
- *           required:
- *             - id
- *             - createdAt
- *             - updatedAt
- *             - name
- *             - userType
+ *           type: integer
  *       required:
  *         - event
  *         - completed

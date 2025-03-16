@@ -37,9 +37,9 @@ export class UserService {
     return this.userRepository.findOneOrFail(id, {
       populate: [
         'userType',
-        'events',
-        'sentTransactions',
-        'receivedTransactions',
+        'events:ref',
+        'sentTransactions:ref',
+        'receivedTransactions:ref',
       ],
     });
   }

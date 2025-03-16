@@ -51,9 +51,11 @@ export class TransactionService {
   }
 
   public async getTransactionById(id: number): Promise<Transaction> {
-    return this.transactionRepository.findOneOrFail(id, {
-      populate: ['event', 'toUser', 'fromUser'],
+    const transaction = await this.transactionRepository.findOneOrFail(id, {
+      populate: ['event', 'event.attendees:ref', 'event.transactions:ref'],
     });
+
+    return transaction;
   }
 
   public async updateById(
@@ -61,7 +63,7 @@ export class TransactionService {
     editTransactionDto: EditTransactionDto
   ): Promise<Transaction> {
     const transaction = await this.transactionRepository.findOneOrFail(id, {
-      populate: ['event', 'toUser', 'fromUser'],
+      populate: ['event'],
     });
 
     transaction.event = editTransactionDto.event;
